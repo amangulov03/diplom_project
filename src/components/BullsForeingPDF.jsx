@@ -5,6 +5,7 @@ import robotoBoldFont from "../assets/fonts/Roboto-Bold.ttf";
 import kyrgyzstanEmblem from "../img/Kyrgyzstan 1.png";
 import knauLogo from "../img/knau.png";
 
+
 // Регистрация шрифтов
 Font.register({
     family: "Roboto",
@@ -198,7 +199,7 @@ const styles = StyleSheet.create({
     },
 });
 
-const BuiilOwnPDF = ({ item }) => (
+const BullsForeingPDF = ({ item }) => (
     <Document>
         <Page size="A4" style={styles.page}>
             <View style={styles.outerBorder} fixed />
@@ -210,7 +211,7 @@ const BuiilOwnPDF = ({ item }) => (
             <View style={styles.header}>
                 <Text style={styles.formInfo}>
                     ФОРМА: Приложение №1{"\n"}
-                    к приказу Минсельхоза КР{"\n"}
+                    к приказу Минсельхоза России{"\n"}
                     от 06.06.2016 №232
                 </Text>
                 <View style={styles.logoContainer}>
@@ -231,7 +232,7 @@ const BuiilOwnPDF = ({ item }) => (
                     ПЛЕМЕННОЕ СВИДЕТЕЛЬСТВО
                 </Text>
                 <Text style={styles.subtitle}>
-                    БЫКИ (СОБСТВЕННЫЕ)
+                    БЫКИ (ИНОСТРАННЫЕ)
                 </Text>
             </View>
 
@@ -261,24 +262,32 @@ const BuiilOwnPDF = ({ item }) => (
                         <Text style={styles.value}>{item.индивидуальныйНомер || "Не указано"}</Text>
                     </View>
                     <View style={styles.field}>
+                        <Text style={styles.label}>Идентификационный номер:</Text>
+                        <Text style={styles.value}>{item.идентификационныйНомер || "Не указано"}</Text>
+                    </View>
+                    <View style={styles.field}>
                         <Text style={styles.label}>Инвентарный номер:</Text>
                         <Text style={styles.value}>{item.инвентарныйНомер || "Не указано"}</Text>
                     </View>
                     <View style={styles.field}>
-                        <Text style={styles.label}>Идентификационный номер:</Text>
-                        <Text style={styles.value}>{item.идентификационныйНомер || "Не указано"}</Text>
+                        <Text style={styles.label}>Код семени:</Text>
+                        <Text style={styles.value}>{item.кодСемени || "Не указано"}</Text>
+                    </View>
+                    <View style={styles.field}>
+                        <Text style={styles.label}>Оригинальная кличка:</Text>
+                        <Text style={styles.value}>{item.оригинальнаяКличка || "Не указано"}</Text>
+                    </View>
+                    <View style={styles.field}>
+                        <Text style={styles.label}>Короткая кличка:</Text>
+                        <Text style={styles.value}>{item.карточнаяКличка || "Не указано"}</Text>
                     </View>
                     <View style={styles.field}>
                         <Text style={styles.label}>Кличка:</Text>
                         <Text style={styles.value}>{item.кличка || "Не указано"}</Text>
                     </View>
                     <View style={styles.field}>
-                        <Text style={styles.label}>Дата рождения:</Text>
-                        <Text style={styles.value}>{item.датаРождения || "Не указано"}</Text>
-                    </View>
-                    <View style={styles.field}>
-                        <Text style={styles.label}>Место рождения:</Text>
-                        <Text style={styles.value}>{item.местоРождения || "Не указано"}</Text>
+                        <Text style={styles.label}>Компания - поставщик семени:</Text>
+                        <Text style={styles.value}>{item.компания_поставщикСемени || "Не указано"}</Text>
                     </View>
                     <View style={styles.field}>
                         <Text style={styles.label}>Порода:</Text>
@@ -289,40 +298,20 @@ const BuiilOwnPDF = ({ item }) => (
                         <Text style={styles.value}>{item.линия || "Не указано"}</Text>
                     </View>
                     <View style={styles.field}>
-                        <Text style={styles.label}>Породность:</Text>
-                        <Text style={styles.value}>{item.породность || "Не указано"}</Text>
-                    </View>
-                    <View style={styles.field}>
-                        <Text style={styles.label}>Семейство:</Text>
-                        <Text style={styles.value}>{item.семейство || "Не указано"}</Text>
-                    </View>
-                    <View style={styles.field}>
-                        <Text style={styles.label}>Владелец:</Text>
-                        <Text style={styles.value}>{item.комуПринадлежит || "Не указано"}</Text>
-                    </View>
-                    <View style={styles.field}>
-                        <Text style={styles.label}>Масть и приметы:</Text>
-                        <Text style={styles.value}>{item.мастьИПриметы || "Не указано"}</Text>
-                    </View>
-                    <View style={styles.field}>
-                        <Text style={styles.label}>Группа крови:</Text>
-                        <Text style={styles.value}>{item.группаКрови || "Не указано"}</Text>
-                    </View>
-                    <View style={styles.field}>
-                        <Text style={styles.label}>Происхождение:</Text>
-                        <Text style={styles.value}>{item.происхождение || "Не указано"}</Text>
+                        <Text style={styles.label}>Дата рождения:</Text>
+                        <Text style={styles.value}>{item.датаРождения || "Не указано"}</Text>
                     </View>
                 </View>
             </View>
 
             <View style={styles.signatureSection}>
                 <View style={styles.signature}>
-                    <Text style={styles.signatureLabel}>Уполномоченная подпись</Text>
+                    <Text style={styles.signatureLabel}>Ответственное лицо</Text>
                     <View style={styles.signatureLine} />
                     <Text>Дата: {new Date().toLocaleDateString()}</Text>
                 </View>
                 <View style={styles.signature}>
-                    <Text style={styles.signatureLabel}>Подпись инспектора</Text>
+                    <Text style={styles.signatureLabel}>Ветеринарный инспектор</Text>
                     <View style={styles.signatureLine} />
                     <Text>Дата: {new Date().toLocaleDateString()}</Text>
                 </View>
@@ -330,11 +319,11 @@ const BuiilOwnPDF = ({ item }) => (
 
             <View style={styles.footer}>
                 <Text>
-                    Сертификат № {item.индивидуальныйНомер || "Не указано"} • Выдан {new Date().toLocaleDateString()}
+                    Сертификат № {item.индивидуальныйНомер || "N/A"} • Выдан {new Date().toLocaleDateString()}
                 </Text>
             </View>
         </Page>
     </Document>
 );
 
-export default BuiilOwnPDF;
+export default BullsForeingPDF;

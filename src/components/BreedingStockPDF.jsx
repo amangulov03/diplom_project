@@ -1,150 +1,247 @@
-// components/BreedingStockPDF.js
 import React from "react";
 import { Document, Page, Text, View, StyleSheet, Font, Image } from "@react-pdf/renderer";
 import robotoFont from "../assets/fonts/Roboto-Regular.ttf";
 import robotoBoldFont from "../assets/fonts/Roboto-Bold.ttf";
+import kyrgyzstanEmblem from "../img/Kyrgyzstan 1.png";
+import knauLogo from "../img/knau.png";
 
-// Регистрируем шрифты
+// Регистрация шрифтов
 Font.register({
     family: "Roboto",
     fonts: [
-        { src: robotoFont, fontWeight: 400 }, // Regular
-        { src: robotoBoldFont, fontWeight: "bold" }, // Bold
+        { src: robotoFont, fontWeight: 400 },
+        { src: robotoBoldFont, fontWeight: 700 },
     ],
 });
 
 const styles = StyleSheet.create({
     page: {
         fontFamily: "Roboto",
-        padding: 30, // Уменьшили padding с 30 до 20
-        backgroundColor: "#f8f5e9",
+        padding: 20,
+        backgroundColor: "#e6f0e6",
         position: "relative",
     },
     outerBorder: {
         position: "absolute",
-        top: 15,
-        left: 15,
-        right: 15,
-        bottom: 15,
-        border: "5 solid #d4a017",
-        borderRadius: 8,
+        top: 10,
+        left: 10,
+        right: 10,
+        bottom: 10,
+        border: "2 solid #2e7d32",
+        borderRadius: 5,
     },
-    innerBorder: {
+    cornerDecoration: {
         position: "absolute",
-        top: 25,
-        left: 25,
-        right: 25,
-        bottom: 25,
-        border: "2 solid #8b5a2b",
-        borderStyle: "dashed",
+        width: 30,
+        height: 30,
+        borderColor: "#2e7d32",
     },
-    watermark: {
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%) rotate(-45deg)",
-        opacity: 0.1,
-        fontSize: 60,
-        color: "#d4a017",
-        fontWeight: "bold",
+    cornerTopLeft: {
+        top: 10,
+        left: 10,
+        borderTop: "2 solid #2e7d32",
+        borderLeft: "2 solid #2e7d32",
+        borderRadius: 5,
+    },
+    cornerTopRight: {
+        top: 10,
+        right: 10,
+        borderTop: "2 solid #2e7d32",
+        borderRight: "2 solid #2e7d32",
+        borderRadius: 5,
+    },
+    cornerBottomLeft: {
+        bottom: 10,
+        left: 10,
+        borderBottom: "2 solid #2e7d32",
+        borderLeft: "2 solid #2e7d32",
+        borderRadius: 5,
+    },
+    cornerBottomRight: {
+        bottom: 10,
+        right: 10,
+        borderBottom: "2 solid #2e7d32",
+        borderRight: "2 solid #2e7d32",
+        borderRadius: 5,
     },
     header: {
         textAlign: "center",
-        marginBottom: 15, // Уменьшили с 20 до 15
-        paddingBottom: 8, // Уменьшили с 10 до 8
-        borderBottom: "3 solid #d4a017",
+        marginBottom: 10,
+    },
+    formInfo: {
+        fontSize: 8,
+        color: "#2e7d32",
+        textAlign: "right",
+        marginBottom: 5,
+    },
+    logoContainer: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        width: "100%",
+        marginBottom: 10,
+    },
+    logoSection: {
+        flexDirection: "row",
+        alignItems: "center",
+        width: 200,
+    },
+    logoImage: {
+        width: 25,
+        height: 25,
+        marginRight: 5,
+    },
+    logoText: {
+        fontSize: 8,
+        color: "#2e7d32",
+        fontWeight: 700,
+        textTransform: "uppercase",
+        textAlign: "left",
+        flex: 1,
     },
     title: {
-        fontSize: 26, // Уменьшили с 30 до 26
-        fontWeight: "bold",
-        color: "#8b5a2b",
-        marginBottom: 4, // Уменьшили с 5 до 4
+        fontSize: 14,
+        fontWeight: 700,
+        color: "#2e7d32",
+        textTransform: "uppercase",
+        marginBottom: 5,
     },
     subtitle: {
-        fontSize: 14, // Уменьшили с 16 до 14
-        color: "#666",
+        fontSize: 12,
+        color: "#2e7d32",
+        textTransform: "uppercase",
+    },
+    serialNumbers: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        marginVertical: 10,
+    },
+    serialText: {
+        fontSize: 10,
+        color: "#2e7d32",
+        fontWeight: 700,
     },
     content: {
-        padding: 20, // Уменьшили с 20 до 15
-        border: "1 solid #d4a017",
+        padding: 10,
+        border: "1 solid #2e7d32",
         borderRadius: 5,
-        backgroundColor: "#fffef0",
-        marginBottom: 15, // Уменьшили с 20 до 15
+        backgroundColor: "#f5f5f5",
+        marginBottom: 10,
     },
     imageContainer: {
         textAlign: "center",
-        marginBottom: 15, // Уменьшили с 20 до 15
+        marginBottom: 10,
     },
     image: {
-        width: 80, // Уменьшили с 100 до 80
-        height: 80, // Уменьшили с 100 до 80
-        borderRadius: 40, // Уменьшили пропорционально
-        border: "2 solid #d4a017",
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        border: "1 solid #2e7d32",
         backgroundColor: "#fff",
+        objectFit: "cover",
     },
     fieldContainer: {
         marginBottom: 5,
     },
     field: {
-        fontSize: 11, // Уменьшили с 12 до 11
-        marginBottom: 6, // Уменьшили с 8 до 6
+        fontSize: 9,
+        marginBottom: 5,
         flexDirection: "row",
         justifyContent: "space-between",
-        borderBottom: "1 dashed #d4a017",
-        paddingBottom: 4, // Уменьшили с 5 до 4
+        paddingBottom: 3,
+        borderBottom: "1 dashed #2e7d32",
     },
     label: {
-        fontWeight: "bold",
-        color: "#8b5a2b",
+        fontWeight: 700,
+        color: "#2e7d32",
         width: "40%",
+        textTransform: "uppercase",
     },
     value: {
         color: "#333",
         width: "60%",
         textAlign: "right",
+        fontSize: 9,
     },
     signatureSection: {
         marginTop: 10,
         flexDirection: "row",
         justifyContent: "space-between",
+        paddingHorizontal: 10,
     },
     signature: {
         textAlign: "center",
-        fontSize: 11, // Уменьшили с 12 до 11
-        color: "#666",
-        width: "40%",
+        fontSize: 8,
+        color: "#2e7d32",
+        width: "45%",
     },
     signatureLine: {
-        borderTop: "1 solid #8b5a2b",
-        width: 100, // Уменьшили с 120 до 100
-        marginTop: 4, // Уменьшили с 5 до 4
-        marginBottom: 4, // Уменьшили с 5 до 4
+        borderTop: "1 solid #2e7d32",
+        width: 80,
+        marginTop: 5,
+        marginBottom: 3,
         marginLeft: "auto",
         marginRight: "auto",
     },
+    signatureLabel: {
+        fontSize: 8,
+        color: "#2e7d32",
+        fontWeight: 700,
+        marginBottom: 3,
+    },
     footer: {
         textAlign: "center",
-        marginTop: 15, // Уменьшили с 20 до 15
-        fontSize: 9, // Уменьшили с 10 до 9
-        color: "#999",
-        borderTop: "1 solid #d4a017",
-        paddingTop: 5, // Уменьшили с paddingBottom 20 до paddingTop 5
+        marginTop: 10,
+        fontSize: 8,
+        color: "#2e7d32",
+        borderTop: "1 solid #2e7d32",
+        paddingTop: 5,
     },
 });
 
 const BreedingStockPDF = ({ item }) => (
     <Document>
         <Page size="A4" style={styles.page}>
-            {/* Элементы с fixed рендерятся на каждой странице */}
             <View style={styles.outerBorder} fixed />
-            <View style={styles.innerBorder} fixed />
-            <Text style={styles.watermark} fixed>
-                СЕРТИФИКАТ
-            </Text>
+            <View style={[styles.cornerDecoration, styles.cornerTopLeft]} fixed />
+            <View style={[styles.cornerDecoration, styles.cornerTopRight]} fixed />
+            <View style={[styles.cornerDecoration, styles.cornerBottomLeft]} fixed />
+            <View style={[styles.cornerDecoration, styles.cornerBottomRight]} fixed />
 
             <View style={styles.header}>
-                <Text style={styles.title}>Сертификат</Text>
-                <Text style={styles.subtitle}>Маточного поголовья</Text>
+                <Text style={styles.formInfo}>
+                    ФОРМА: Приложение №1{"\n"}
+                    к приказу Минсельхоза КР{"\n"}
+                    от 06.06.2016 №232
+                </Text>
+                <View style={styles.logoContainer}>
+                    <View style={styles.logoSection}>
+                        <Image style={styles.logoImage} src={kyrgyzstanEmblem} />
+                        <Text style={styles.logoText}>
+                            МИНИСТЕРСТВО СЕЛЬСКОГО ХОЗЯЙСТВА КЫРГЫЗСКОЙ РЕСПУБЛИКИ
+                        </Text>
+                    </View>
+                    <View style={styles.logoSection}>
+                        <Image style={styles.logoImage} src={knauLogo} />
+                        <Text style={styles.logoText}>
+                            КЫРГЫЗСКИЙ НАЦИОНАЛЬНЫЙ АГРАРНЫЙ УНИВЕРСИТЕТ
+                        </Text>
+                    </View>
+                </View>
+                <Text style={styles.title}>
+                    ПЛЕМЕННОЕ СВИДЕТЕЛЬСТВО
+                </Text>
+                <Text style={styles.subtitle}>
+                    НА КРУПНЫЙ РОГАТЫЙ СКОТ МОЛОЧНОЙ ПРОДУКТИВНОСТИ
+                </Text>
+            </View>
+
+            <View style={styles.serialNumbers}>
+                <Text style={styles.serialText}>
+                    Серия ПС 00 (серия)
+                </Text>
+                <Text style={styles.serialText}>
+                    № {item.индивидуальныйНомер || "00000000"} (регистрационный номер)
+                </Text>
             </View>
 
             <View style={styles.content}>
@@ -152,10 +249,8 @@ const BreedingStockPDF = ({ item }) => (
                     {item.фото ? (
                         <Image style={styles.image} src={item.фото} />
                     ) : (
-                        <Text
-                            style={{ textAlign: "center", fontSize: 10, color: "#999" }}
-                        >
-                            Фото отсутствует или недоступно
+                        <Text style={{ textAlign: "center", fontSize: 8, color: "#999" }}>
+                            Фото отсутствует
                         </Text>
                     )}
                 </View>
@@ -163,21 +258,15 @@ const BreedingStockPDF = ({ item }) => (
                 <View style={styles.fieldContainer}>
                     <View style={styles.field}>
                         <Text style={styles.label}>Индивидуальный номер:</Text>
-                        <Text style={styles.value}>
-                            {item.индивидуальныйНомер || "Не указано"}
-                        </Text>
+                        <Text style={styles.value}>{item.индивидуальныйНомер || "Не указано"}</Text>
                     </View>
                     <View style={styles.field}>
                         <Text style={styles.label}>Инвентарный номер:</Text>
-                        <Text style={styles.value}>
-                            {item.инвентарныйНомер || "Не указано"}
-                        </Text>
+                        <Text style={styles.value}>{item.инвентарныйНомер || "Не указано"}</Text>
                     </View>
                     <View style={styles.field}>
                         <Text style={styles.label}>Идентификационный номер:</Text>
-                        <Text style={styles.value}>
-                            {item.идентификационныйНомер || "Не указано"}
-                        </Text>
+                        <Text style={styles.value}>{item.идентификационныйНомер || "Не указано"}</Text>
                     </View>
                     <View style={styles.field}>
                         <Text style={styles.label}>Кличка:</Text>
@@ -185,15 +274,11 @@ const BreedingStockPDF = ({ item }) => (
                     </View>
                     <View style={styles.field}>
                         <Text style={styles.label}>Дата рождения:</Text>
-                        <Text style={styles.value}>
-                            {item.датаРождения || "Не указано"}
-                        </Text>
+                        <Text style={styles.value}>{item.датаРождения || "Не указано"}</Text>
                     </View>
                     <View style={styles.field}>
                         <Text style={styles.label}>Место рождения:</Text>
-                        <Text style={styles.value}>
-                            {item.местоРождения || "Не указано"}
-                        </Text>
+                        <Text style={styles.value}>{item.местоРождения || "Не указано"}</Text>
                     </View>
                     <View style={styles.field}>
                         <Text style={styles.label}>Порода:</Text>
@@ -205,55 +290,43 @@ const BreedingStockPDF = ({ item }) => (
                     </View>
                     <View style={styles.field}>
                         <Text style={styles.label}>Породность:</Text>
-                        <Text style={styles.value}>
-                            {item.породность || "Не указано"}
-                        </Text>
+                        <Text style={styles.value}>{item.породность || "Не указано"}</Text>
                     </View>
                     <View style={styles.field}>
                         <Text style={styles.label}>Семейство:</Text>
                         <Text style={styles.value}>{item.семейство || "Не указано"}</Text>
                     </View>
                     <View style={styles.field}>
-                        <Text style={styles.label}>Кому принадлежит:</Text>
-                        <Text style={styles.value}>
-                            {item.комуПринадлежит || "Не указано"}
-                        </Text>
+                        <Text style={styles.label}>Владелец:</Text>
+                        <Text style={styles.value}>{item.комуПринадлежит || "Не указано"}</Text>
                     </View>
                     <View style={styles.field}>
-                        <Text style={styles.label}>Назначение коровы:</Text>
-                        <Text style={styles.value}>
-                            {item.назначениеКоровы || "Не указано"}
-                        </Text>
+                        <Text style={styles.label}>Назначение:</Text>
+                        <Text style={styles.value}>{item.назначениеКоровы || "Не указано"}</Text>
                     </View>
                     <View style={styles.field}>
                         <Text style={styles.label}>Масть и приметы:</Text>
-                        <Text style={styles.value}>
-                            {item.мастьИПриметы || "Не указано"}
-                        </Text>
+                        <Text style={styles.value}>{item.мастьИПриметы || "Не указано"}</Text>
                     </View>
                     <View style={styles.field}>
                         <Text style={styles.label}>Группа крови:</Text>
-                        <Text style={styles.value}>
-                            {item.группаКрови || "Не указано"}
-                        </Text>
+                        <Text style={styles.value}>{item.группаКрови || "Не указано"}</Text>
                     </View>
                     <View style={styles.field}>
                         <Text style={styles.label}>Происхождение:</Text>
-                        <Text style={styles.value}>
-                            {item.происхождение || "Не указано"}
-                        </Text>
+                        <Text style={styles.value}>{item.происхождение || "Не указано"}</Text>
                     </View>
                 </View>
             </View>
 
             <View style={styles.signatureSection}>
                 <View style={styles.signature}>
-                    <Text>Ответственное лицо</Text>
+                    <Text style={styles.signatureLabel}>Уполномоченная подпись</Text>
                     <View style={styles.signatureLine} />
                     <Text>Дата: {new Date().toLocaleDateString()}</Text>
                 </View>
                 <View style={styles.signature}>
-                    <Text>Ветеринарный инспектор</Text>
+                    <Text style={styles.signatureLabel}>Подпись инспектора</Text>
                     <View style={styles.signatureLine} />
                     <Text>Дата: {new Date().toLocaleDateString()}</Text>
                 </View>
@@ -261,8 +334,7 @@ const BreedingStockPDF = ({ item }) => (
 
             <View style={styles.footer}>
                 <Text>
-                    Сертификат № {item.индивидуальныйНомер || "N/A"} • Выдан{" "}
-                    {new Date().toLocaleDateString()}
+                    Сертификат № {item.индивидуальныйНомер || "Не указано"} • Выдан {new Date().toLocaleDateString()}
                 </Text>
             </View>
         </Page>

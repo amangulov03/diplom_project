@@ -46,8 +46,8 @@ function BullsForeing() {
               label: "Идентификационный номер",
               type: "number",
           },
+          { name: "инвентарныйНомер", label: "Инвентарный Номер", type: "number" },
           { name: "кодСемени", label: "Код семени", type: "number" },
-          { name: "кличка", label: "Кличка", type: "text" },
           { name: "оригинальнаяКличка", label: "Оригинальная кличка", type: "text" },
           { name: "карточнаяКличка", label: "Короткая кличка", type: "text" },
           { name: "кличка", label: "Кличка", type: "text" },
@@ -156,7 +156,7 @@ function BullsForeing() {
       };
 
       return (
-          <div className="breeding-stock-container">
+          <div className="breeding-stock-container" style={{marginBottom: "100px"}}>
               <RightMenu
                   formData={formData}
                   onSearchResult={handleSearchResult}
@@ -175,7 +175,7 @@ function BullsForeing() {
               <div className="main-breeding-stock">
                   <form>{mainFields.map((field) => renderInput(field))}</form>
               </div>
-              <div className="genealogy-container">
+              <div className="genealogy-container" style={{paddingBottom: "100px"}}>
                   <Genealogy
                       onGenealogyChange={handleGenealogyChange}
                       genealogyData={formData.генеалогия}

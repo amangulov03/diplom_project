@@ -24,7 +24,6 @@ function Genealogy({ genealogyData, onGenealogyChange }) {
     const canvasRef = useRef(null);
     const containerRef = useRef(null);
 
-    // Словарь для отображения названий узлов на русском
     const nodeDisplayNames = {
         отец: "Отец",
         мать: "Мать",
@@ -42,7 +41,6 @@ function Genealogy({ genealogyData, onGenealogyChange }) {
         мать_матери_матери: "Мать матери матери",
     };
 
-    // Синхронизация локального состояния с переданными данными
     const prevDataRef = useRef();
 
     useEffect(() => {
@@ -69,17 +67,15 @@ function Genealogy({ genealogyData, onGenealogyChange }) {
         }));
     };
 
-    // Передаём данные родителю при каждом изменении
     useEffect(() => {
-        if (typeof onGenealogyChange === "function") {
+        if (typeof onGenealogyChange === "function" && !isEqual(formData, prevDataRef.current)) {
             onGenealogyChange(formData);
+            prevDataRef.current = formData;
         }
     }, [formData, onGenealogyChange]);
 
-    // Мемоизация nodeDisplayName
     const nodeDisplayName = `Генеалогия - ${nodeDisplayNames[activeNode]}`;
 
-    // Рисование линий
     useEffect(() => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext("2d");
@@ -126,7 +122,6 @@ function Genealogy({ genealogyData, onGenealogyChange }) {
         drawLine("мать_матери", "мать_матери_матери");
     }, []);
 
-    // Обновление линий при ресайзе с debounce
     useEffect(() => {
         let resizeTimeout;
 
@@ -152,11 +147,9 @@ function Genealogy({ genealogyData, onGenealogyChange }) {
                     const childRect = child.getBoundingClientRect();
                     const containerRect = container.getBoundingClientRect();
 
-                    const parentX =
-                        parentRect.left + parentRect.width / 2 - containerRect.left;
+                    const parentX = parentRect.left + parentRect.width / 2 - containerRect.left;
                     const parentY = parentRect.bottom - containerRect.top;
-                    const childX =
-                        childRect.left + childRect.width / 2 - containerRect.left;
+                    const childX = childRect.left + childRect.width / 2 - containerRect.left;
                     const childY = childRect.top - containerRect.top;
 
                     ctx.beginPath();
@@ -177,7 +170,7 @@ function Genealogy({ genealogyData, onGenealogyChange }) {
                 drawLine("отец_матери", "мать_отца_матери");
                 drawLine("мать_матери", "отец_матери_матери");
                 drawLine("мать_матери", "мать_матери_матери");
-            }, 200); // Debounce 200ms
+            }, 200);
         };
 
         window.addEventListener("resize", handleResize);
@@ -332,9 +325,7 @@ function Genealogy({ genealogyData, onGenealogyChange }) {
                         onClick={() => handleNodeClick("отец_матери_матери")}
                         style={{
                             background:
-                                activeNode === "отец_матери_матери"
-                                    ? "#2e6dcc"
-                                    : "#3498db",
+                                activeNode === "отец_матери_матери" ? "#2e6dcc" : "#3498db",
                         }}
                     >
                         Отец матери матери
@@ -344,9 +335,7 @@ function Genealogy({ genealogyData, onGenealogyChange }) {
                         onClick={() => handleNodeClick("мать_матери_матери")}
                         style={{
                             background:
-                                activeNode === "мать_матери_матери"
-                                    ? "#2e6dcc"
-                                    : "#3498db",
+                                activeNode === "мать_матери_матери" ? "#2e6dcc" : "#3498db",
                         }}
                     >
                         Мать матери матери

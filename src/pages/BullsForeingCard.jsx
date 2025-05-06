@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { pdf } from "@react-pdf/renderer";
 import { saveAs } from "file-saver";
-import BullsOwnPDF from "../components/BullsOwnPDF";
+import BullsForeingPDF from "../components/BullsForeingPDF";
 
 function BullsForeingCard() {
   const [bullsOwnData, setBullsOwnData] = useState([]);
@@ -98,7 +98,7 @@ function BullsForeingCard() {
                 ...item,
                 фото: imageBase64Map[item.индивидуальныйНомер] || item.фото,
             };
-            const blob = await pdf(<BullsOwnPDF item={modifiedItem} />).toBlob();
+            const blob = await pdf(<BullsForeingPDF item={modifiedItem} />).toBlob();
             const fileName = `bull-card-${item.индивидуальныйНомер || "без-номера"}.pdf`;
             saveAs(blob, fileName);
         } catch (error) {

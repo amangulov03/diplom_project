@@ -9,6 +9,7 @@ function RightMenu({ formData, onSearchResult, onResetForm, dataType = "breeding
     const [isSearch, setIsSearch] = useState(false);
     const [value, setValue] = useState("");
     const [breedingStockData, setBreedingStockData] = useState([]);
+    const [isEditing, setIsEditing] = useState(false);
 
     const SearchRef = useRef(null);
     const hiddenSearchRef = useRef(null);
@@ -25,6 +26,7 @@ function RightMenu({ formData, onSearchResult, onResetForm, dataType = "breeding
 
         if (inputValue.trim() === "") {
             if (onSearchResult) onSearchResult(null);
+            setIsEditing(false);
         }
     };
 
@@ -32,6 +34,7 @@ function RightMenu({ formData, onSearchResult, onResetForm, dataType = "breeding
         preventCloseRef.current = true;
         setValue("");
         if (onSearchResult) onSearchResult(null);
+        setIsEditing(false);
 
         setTimeout(() => {
             preventCloseRef.current = false;
@@ -118,6 +121,7 @@ function RightMenu({ formData, onSearchResult, onResetForm, dataType = "breeding
                         (item.кличка && item.кличка.toString().includes(query))
                 );
                 if (onSearchResult) onSearchResult(result || null);
+                setIsEditing(!!result);
             }, 500),
         [breedingStockData, onSearchResult]
     );
@@ -131,58 +135,143 @@ function RightMenu({ formData, onSearchResult, onResetForm, dataType = "breeding
             }
 
             const individualNumber = formData.индивидуальныйНомер?.toString();
+            if (!individualNumber || individualNumber.trim() === "") {
+                alert("Поле 'индивидуальныйНомер' обязательно для заполнения!");
+                return;
+            }
+
             if (
                 breedingStockData.some(
                     (item) => item.индивидуальныйНомер === individualNumber
                 )
             ) {
-                alert("Запись с таким индивидуальным номером уже существует!");
+                alert("Запись с таким индивидуальным номером уже существует! Используйте кнопку 'Изменить'.");
                 return;
             }
 
-            const fieldsToCheck = {
-                индивидуальныйНомер: formData.индивидуальныйНомер,
-                инвентарныйНомер: formData.инвентарныйНомер,
-                идентификационныйНомер: formData.идентификационныйНомер,
-                кличка: formData.кличка,
-                датаРождения: formData.датаРождения,
-                местоРождения: formData.местоРождения,
-                порода: formData.порода,
-                линия: formData.линия,
-                породность: formData.породность,
-                семейство: formData.семейство,
-                комуПринадлежит: formData.комуПринадлежит,
-                назначениеКоровы: formData.назначениеКоровы,
-                мастьИПриметы: formData.мастьИПриметы,
-                группаКрови: formData.группаКрови,
-                происхождение: formData.происхождение,
-                фото: formData.фото,
-                генеалогия: formData.генеалогия,
-                живаяМассаПриРождении: formData.живаяМассаПриРождении,
-                живаяМассаВ6Месяцев: formData.живаяМассаВ6Месяцев,
-                живаяМассаВ10Месяцев: formData.живаяМассаВ10Месяцев,
-                живаяМассаВ12Месяцев: formData.живаяМассаВ12Месяцев,
-                живаяМассаВ18Месяцев: formData.живаяМассаВ18Месяцев,
-                перемещениеОткуда: formData.перемещениеОткуда,
-                перемещениеКуда: formData.перемещениеКуда,
-                перемещениеДата: formData.перемещениеДата,
-                перемещениеВозраст: formData.перемещениеВозраст,
-                перемещениеЖиваяМасса: formData.перемещениеЖиваяМасса,
-                перемещениеЦельПеремещения: formData.перемещениеЦельПеремещения,
-                датаВыбытия: formData.датаВыбытия,
-                причинаВыбытия: formData.причинаВыбытия,
-                возрастПервогоИспользования: formData.возрастПервогоИспользования,
-                датаПеровогоИспользования: formData.датаПеровогоИспользования,
-                количествоИспользований: formData.количествоИспользований,
-                кодСемени: formData.кодСемени,
-                оригинальнаяКличка: formData.оригинальнаяКличка,
-                карточнаяКличка: formData.карточнаяКличка,
-                компания_поставщикСемени: formData.компания_поставщикСемени,
-            };
+            let fieldsToCheck;
+            if (dataType === "bullsForeing") {
+                fieldsToCheck = {
+                    индивидуальныйНомер: formData.индивидуальныйНомер,
+                    идентификационныйНомер: formData.идентификационныйНомер,
+                    инвентарныйНомер: formData.инвентарныйНомер,
+                    кодСемени: formData.кодСемени,
+                    оригинальнаяКличка: formData.оригинальнаяКличка,
+                    карточнаяКличка: formData.карточнаяКличка,
+                    кличка: formData.кличка,
+                    датаРождения: formData.датаРождения,
+                    компания_поставщикСемени: formData.компания_поставщикСемени,
+                    порода: formData.порода,
+                    линия: formData.линия,
+                    генеалогия: formData.генеалогия,
+                    фото: formData.фото,
+                };
+            } else if (dataType === "bullsOwn") {
+                fieldsToCheck = {
+                    индивидуальныйНомер: formData.индивидуальныйНомер,
+                    инвентарныйНомер: formData.инвентарныйНомер,
+                    идентификационныйНомер: formData.идентификационныйНомер,
+                    кличка: formData.кличка,
+                    датаРождения: formData.датаРождения,
+                    местоРождения: formData.местоРождения,
+                    порода: formData.порода,
+                    линия: formData.линия,
+                    породность: formData.породность,
+                    семейство: formData.семейство,
+                    комуПринадлежит: formData.комуПринадлежит,
+                    мастьИПриметы: formData.мастьИПриметы,
+                    группаКрови: formData.группаКрови,
+                    происхождение: formData.происхождение,
+                    фото: formData.фото,
+                    генеалогия: formData.генеалогия,
+                    живаяМассаПриРождении: formData.живаяМассаПриРождении,
+                    живаяМассаВ6Месяцев: formData.живаяМассаВ6Месяцев,
+                    живаяМассаВ10Месяцев: formData.живаяМассаВ10Месяцев,
+                    живаяМассаВ12Месяцев: formData.живаяМассаВ12Месяцев,
+                    живаяМассаВ18Месяцев: formData.живаяМассаВ18Месяцев,
+                    перемещениеОткуда: formData.перемещениеОткуда,
+                    перемещениеКуда: formData.перемещениеКуда,
+                    перемещениеДата: formData.перемещениеДата,
+                    перемещениеВозраст: formData.перемещениеВозраст,
+                    перемещениеЖиваяМасса: formData.перемещениеЖиваяМасса,
+                    перемещениеЦельПеремещения: formData.перемещениеЦельПеремещения,
+                    датаВыбытия: formData.датаВыбытия,
+                    причинаВыбытия: formData.причинаВыбытия,
+                };
+            } else {
+                fieldsToCheck = {
+                    индивидуальныйНомер: formData.индивидуальныйНомер,
+                    инвентарныйНомер: formData.инвентарныйНомер,
+                    идентификационныйНомер: formData.идентификационныйНомер,
+                    кличка: formData.кличка,
+                    датаРождения: formData.датаРождения,
+                    местоРождения: formData.местоРождения,
+                    порода: formData.порода,
+                    линия: formData.линия,
+                    породность: formData.породность,
+                    семейство: formData.семейство,
+                    комуПринадлежит: formData.комуПринадлежит,
+                    назначениеКоровы: formData.назначениеКоровы,
+                    мастьИПриметы: formData.мастьИПриметы,
+                    группаКрови: formData.группаКрови,
+                    происхождение: formData.происхождение,
+                    фото: formData.фото,
+                    генеалогия: formData.генеалогия,
+                    живаяМассаПриРождении: formData.живаяМассаПриРождении,
+                    живаяМассаВ6Месяцев: formData.живаяМассаВ6Месяцев,
+                    живаяМассаВ10Месяцев: formData.живаяМассаВ10Месяцев,
+                    живаяМассаВ12Месяцев: formData.живаяМассаВ12Месяцев,
+                    живаяМассаВ18Месяцев: formData.живаяМассаВ18Месяцев,
+                    живаяМассаПриПервомОсоменении: formData.живаяМассаПриПервомОсоменении,
+                    возрастПервогоОсеменения: formData.возрастПервогоОсеменения,
+                    датаОсеменения: formData.датаОсеменения,
+                    номерОсеменения: formData.номерОсеменения,
+                    индивидуальныйНомерБыка: formData.индивидуальныйНомерБыка,
+                    кличкаБыка: formData.кличкаБыка,
+                    методСлучки: formData.методСлучки,
+                    датаИсследованияНаСтельность: formData.датаИсследованияНаСтельность,
+                    результатИсследованияНаСтельность: formData.результатИсследованияНаСтельность,
+                    датаОтела: formData.датаОтела,
+                    результатОтела: formData.результатОтела,
+                    легкостьОтела: formData.легкостьОтела,
+                    индивидуальныеНомераПриплода: formData.индивидуальныеНомераПриплода,
+                    датаЗапуска: formData.датаЗапуска,
+                    продолжительностьСервисПериода: formData.продолжительностьСервисПериода,
+                    продолжительностьСухостойногоПериода: formData.продолжительностьСухостойногоПериода,
+                    датаКонтрольногоДоения: formData.датаКонтрольногоДоения,
+                    удой: formData.удой,
+                    жир: formData.жир,
+                    белок: formData.белок,
+                    времяДоения: formData.времяДоения,
+                    скоростьМолокоотдачи: formData.скоростьМолокоотдачи,
+                    баллСкоростиМолокоотдачи: formData.баллСкоростиМолокоотдачи,
+                    удойЗаЛактацию: formData.удойЗаЛактацию,
+                    удойЗа305Дней: formData.удойЗа305Дней,
+                    жирЗаЛактацию: formData.жирЗаЛактацию,
+                    жирЗа305Дней: formData.жирЗа305Дней,
+                    белокЗаЛактацию: formData.белокЗаЛактацию,
+                    белокЗа305Дней: formData.белокЗа305Дней,
+                    датаПовторногоЗапуска: formData.датаПовторногоЗапуска,
+                    количествоДойныхДней: formData.количествоДойныхДней,
+                    перемещениеОткуда: formData.перемещениеОткуда,
+                    перемещениеКуда: formData.перемещениеКуда,
+                    перемещениеДата: formData.перемещениеДата,
+                    перемещениеВозраст: formData.перемещениеВозраст,
+                    перемещениеЖиваяМасса: formData.перемещениеЖиваяМасса,
+                    перемещениеЦельПеремещения: formData.перемещениеЦельПеремещения,
+                    датаВыбытия: formData.датаВыбытия,
+                    причинаВыбытия: formData.причинаВыбытия,
+                    линейнаяОценкаБ: formData.линейнаяОценкаБ,
+                    линейнаяОценкаА: formData.линейнаяОценкаА,
+                };
+            }
 
-            const isAnyFieldFilled = Object.values(fieldsToCheck).some(
-                (value) => value && value.trim() !== ""
-            );
+            const isAnyFieldFilled = Object.values(fieldsToCheck).some((value) => {
+                if (value === null || value === undefined) return false;
+                if (typeof value === "string") return value.trim() !== "";
+                if (typeof value === "object") return Object.keys(value).length > 0;
+                return !!value;
+            });
 
             if (!isAnyFieldFilled) {
                 alert("Заполните хотя бы одно поле!");
@@ -190,12 +279,11 @@ function RightMenu({ formData, onSearchResult, onResetForm, dataType = "breeding
             }
 
             const filteredFormData = Object.fromEntries(
-                Object.entries(fieldsToCheck).filter(
-                    ([_, value]) => value !== undefined && value !== ""
-                )
+                Object.entries(fieldsToCheck)
+                    .filter(([key, value]) => key === "индивидуальныйНомер" || (value && (typeof value === "string" ? value.trim() !== "" : typeof value === "object" ? Object.keys(value).length > 0 : !!value)))
             );
 
-            console.log("Отправляемые данные:", filteredFormData);
+            console.log("Отправляемые данные:", JSON.stringify(filteredFormData, null, 2));
             let apiEndpoint = "";
             switch (dataType) {
                 case "breedingStock":
@@ -232,7 +320,7 @@ function RightMenu({ formData, onSearchResult, onResetForm, dataType = "breeding
                 "Ошибка при сохранении данных:",
                 error.response?.data || error.message
             );
-            console.log("Полный ответ сервера:", error.response);
+            console.log("Полный ответ сервера:", JSON.stringify(error.response?.data, null, 2));
             alert(error.response?.data?.detail || "Ошибка при сохранении данных");
         }
     };
@@ -246,69 +334,158 @@ function RightMenu({ formData, onSearchResult, onResetForm, dataType = "breeding
             }
 
             const individualNumber = formData.индивидуальныйНомер?.toString();
-            if (!individualNumber) {
-                alert("Выберите запись для обновления через поиск!");
+            if (!individualNumber || individualNumber.trim() === "") {
+                alert("Поле 'индивидуальныйНомер' обязательно для заполнения!");
                 return;
             }
 
-            const fieldsToCheck = {
-                индивидуальныйНомер: formData.индивидуальныйНомер,
-                инвентарныйНомер: formData.инвентарныйНомер,
-                идентификационныйНомер: formData.идентификационныйНомер,
-                кличка: formData.кличка,
-                датаРождения: formData.датаРождения,
-                местоРождения: formData.местоРождения,
-                порода: formData.порода,
-                линия: formData.линия,
-                породность: formData.породность,
-                семейство: formData.семейство,
-                комуПринадлежит: formData.комуПринадлежит,
-                ...(dataType === "breedingStock"
-                    ? { назначениеКоровы: formData.назначениеКоровы }
-                    : { назначениеБыка: formData.назначениеБыка }),
-                мастьИПриметы: formData.мастьИПриметы,
-                группаКрови: formData.группаКрови,
-                происхождение: formData.происхождение,
-                фото: formData.фото,
-                генеалогия: formData.генеалогия,
-                живаяМассаПриРождении: formData.живаяМассаПриРождении,
-                живаяМассаВ6Месяцев: formData.живаяМассаВ6Месяцев,
-                живаяМассаВ10Месяцев: formData.живаяМассаВ10Месяцев,
-                живаяМассаВ12Месяцев: formData.живаяМассаВ12Месяцев,
-                живаяМассаВ18Месяцев: formData.живаяМассаВ18Месяцев,
-                перемещениеОткуда: formData.перемещениеОткуда,
-                перемещениеКуда: formData.перемещениеКуда,
-                перемещениеДата: formData.перемещениеДата,
-                перемещениеВозраст: formData.перемещениеВозраст,
-                перемещениеЖиваяМасса: formData.перемещениеЖиваяМасса,
-                перемещениеЦельПеремещения: formData.перемещениеЦельПеремещения,
-                датаВыбытия: formData.датаВыбытия,
-                причинаВыбытия: formData.причинаВыбытия,
-                возрастПервогоИспользования: formData.возрастПервогоИспользования,
-                датаПеровогоИспользования: formData.датаПеровогоИспользования,
-                количествоИспользований: formData.количествоИспользований,
-                кодСемени: formData.кодСемени,
-                оригинальнаяКличка: formData.оригинальнаяКличка,
-                карточнаяКличка: formData.карточнаяКличка,
-                компания_поставщикСемени: formData.компания_поставщикСемени,
-            };
-
-            const isAnyFieldFilled = Object.values(fieldsToCheck).some(
-                (value) => value && value.trim() !== ""
+            // Находим текущую запись в breedingStockData
+            const existingRecord = breedingStockData.find(
+                (item) => item.индивидуальныйНомер === individualNumber
             );
+            if (!existingRecord) {
+                alert("Запись не найдена! Пожалуйста, выберите существующую запись через поиск.");
+                return;
+            }
+
+            let fieldsToCheck;
+            if (dataType === "bullsForeing") {
+                fieldsToCheck = {
+                    индивидуальныйНомер: formData.индивидуальныйНомер,
+                    идентификационныйНомер: formData.идентификационныйНомер,
+                    инвентарныйНомер: formData.инвентарныйНомер,
+                    кодСемени: formData.кодСемени,
+                    оригинальнаяКличка: formData.оригинальнаяКличка,
+                    карточнаяКличка: formData.карточнаяКличка,
+                    кличка: formData.кличка,
+                    датаРождения: formData.датаРождения,
+                    компания_поставщикСемени: formData.компания_поставщикСемени,
+                    порода: formData.порода,
+                    линия: formData.линия,
+                    генеалогия: formData.генеалогия,
+                    фото: formData.фото,
+                };
+            } else if (dataType === "bullsOwn") {
+                fieldsToCheck = {
+                    индивидуальныйНомер: formData.индивидуальныйНомер,
+                    инвентарныйНомер: formData.инвентарныйНомер,
+                    идентификационныйНомер: formData.идентификационныйНомер,
+                    кличка: formData.кличка,
+                    датаРождения: formData.датаРождения,
+                    местоРождения: formData.местоРождения,
+                    порода: formData.порода,
+                    линия: formData.линия,
+                    породность: formData.породность,
+                    семейство: formData.семейство,
+                    комуПринадлежит: formData.комуПринадлежит,
+                    мастьИПриметы: formData.мастьИПриметы,
+                    группаКрови: formData.группаКрови,
+                    происхождение: formData.происхождение,
+                    фото: formData.фото,
+                    генеалогия: formData.генеалогия,
+                    живаяМассаПриРождении: formData.живаяМассаПриРождении,
+                    живаяМассаВ6Месяцев: formData.живаяМассаВ6Месяцев,
+                    живаяМассаВ10Месяцев: formData.живаяМассаВ10Месяцев,
+                    живаяМассаВ12Месяцев: formData.живаяМассаВ12Месяцев,
+                    живаяМассаВ18Месяцев: formData.живаяМассаВ18Месяцев,
+                    перемещениеОткуда: formData.перемещениеОткуда,
+                    перемещениеКуда: formData.перемещениеКуда,
+                    перемещениеДата: formData.перемещениеДата,
+                    перемещениеВозраст: formData.перемещениеВозраст,
+                    перемещениеЖиваяМасса: formData.перемещениеЖиваяМасса,
+                    перемещениеЦельПеремещения: formData.перемещениеЦельПеремещения,
+                    датаВыбытия: formData.датаВыбытия,
+                    причинаВыбытия: formData.причинаВыбытия,
+                };
+            } else {
+                fieldsToCheck = {
+                    индивидуальныйНомер: formData.индивидуальныйНомер,
+                    инвентарныйНомер: formData.инвентарныйНомер,
+                    идентификационныйНомер: formData.идентификационныйНомер,
+                    кличка: formData.кличка,
+                    датаРождения: formData.датаРождения,
+                    местоРождения: formData.местоРождения,
+                    порода: formData.порода,
+                    линия: formData.линия,
+                    породность: formData.породность,
+                    семейство: formData.семейство,
+                    комуПринадлежит: formData.комуПринадлежит,
+                    назначениеКоровы: formData.назначениеКоровы,
+                    мастьИПриметы: formData.мастьИПриметы,
+                    группаКрови: formData.группаКрови,
+                    происхождение: formData.происхождение,
+                    фото: formData.фото,
+                    генеалогия: formData.генеалогия,
+                    живаяМассаПриРождении: formData.живаяМассаПриРождении,
+                    живаяМассаВ6Месяцев: formData.живаяМассаВ6Месяцев,
+                    живаяМассаВ10Месяцев: formData.живаяМассаВ10Месяцев,
+                    живаяМассаВ12Месяцев: formData.живаяМассаВ12Месяцев,
+                    живаяМассаВ18Месяцев: formData.живаяМассаВ18Месяцев,
+                    живаяМассаПриПервомОсоменении: formData.живаяМассаПриПервомОсоменении,
+                    возрастПервогоОсеменения: formData.возрастПервогоОсеменения,
+                    датаОсеменения: formData.датаОсеменения,
+                    номерОсеменения: formData.номерОсеменения,
+                    индивидуальныйНомерБыка: formData.индивидуальныйНомерБыка,
+                    кличкаБыка: formData.кличкаБыка,
+                    методСлучки: formData.методСлучки,
+                    датаИсследованияНаСтельность: formData.датаИсследованияНаСтельность,
+                    результатИсследованияНаСтельность: formData.результатИсследованияНаСтельность,
+                    датаОтела: formData.датаОтела,
+                    результатОтела: formData.результатОтела,
+                    легкостьОтела: formData.легкостьОтела,
+                    индивидуальныеНомераПриплода: formData.индивидуальныеНомераПриплода,
+                    датаЗапуска: formData.датаЗапуска,
+                    продолжительностьСервисПериода: formData.продолжительностьСервисПериода,
+                    продолжительностьСухостойногоПериода: formData.продолжительностьСухостойногоПериода,
+                    датаКонтрольногоДоения: formData.датаКонтрольногоДоения,
+                    удой: formData.удой,
+                    жир: formData.жир,
+                    белок: formData.белок,
+                    времяДоения: formData.времяДоения,
+                    скоростьМолокоотдачи: formData.скоростьМолокоотдачи,
+                    баллСкоростиМолокоотдачи: formData.баллСкоростиМолокоотдачи,
+                    удойЗаЛактацию: formData.удойЗаЛактацию,
+                    удойЗа305Дней: formData.удойЗа305Дней,
+                    жирЗаЛактацию: formData.жирЗаЛактацию,
+                    жирЗа305Дней: formData.жирЗа305Дней,
+                    белокЗаЛактацию: formData.белокЗаЛактацию,
+                    белокЗа305Дней: formData.белокЗа305Дней,
+                    датаПовторногоЗапуска: formData.датаПовторногоЗапуска,
+                    количествоДойныхДней: formData.количествоДойныхДней,
+                    перемещениеОткуда: formData.перемещениеОткуда,
+                    перемещениеКуда: formData.перемещениеКуда,
+                    перемещениеДата: formData.перемещениеДата,
+                    перемещениеВозраст: formData.перемещениеВозраст,
+                    перемещениеЖиваяМасса: formData.перемещениеЖиваяМасса,
+                    перемещениеЦельПеремещения: formData.перемещениеЦельПеремещения,
+                    датаВыбытия: formData.датаВыбытия,
+                    причинаВыбытия: formData.причинаВыбытия,
+                    линейнаяОценкаБ: formData.линейнаяОценкаБ,
+                    линейнаяОценкаА: formData.линейнаяОценкаА,
+                };
+            }
+
+            const isAnyFieldFilled = Object.values(fieldsToCheck).some((value) => {
+                if (value === null || value === undefined) return false;
+                if (typeof value === "string") return value.trim() !== "";
+                if (typeof value === "object") return Object.keys(value).length > 0;
+                return !!value;
+            });
 
             if (!isAnyFieldFilled) {
                 alert("Заполните хотя бы одно поле!");
                 return;
             }
 
-            const filteredFormData = Object.fromEntries(
-                Object.entries(fieldsToCheck).filter(
-                    ([_, value]) => value !== undefined && value !== ""
-                )
+            // Создаём объект с обновлёнными полями, сохраняя существующие данные
+            const updatedFields = Object.fromEntries(
+                Object.entries(fieldsToCheck)
+                    .filter(([key, value]) => key === "индивидуальныйНомер" || (value && (typeof value === "string" ? value.trim() !== "" : typeof value === "object" ? Object.keys(value).length > 0 : !!value)))
             );
 
-            console.log("Отправляем данные для обновления на сервер:", filteredFormData);
+            // Сливаем обновлённые поля с существующей записью
+            const updatedFormData = { ...existingRecord, ...updatedFields };
+
             let apiEndpoint = "";
             switch (dataType) {
                 case "breedingStock":
@@ -326,7 +503,7 @@ function RightMenu({ formData, onSearchResult, onResetForm, dataType = "breeding
 
             const response = await axios.post(
                 apiEndpoint,
-                filteredFormData,
+                updatedFormData,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -340,17 +517,18 @@ function RightMenu({ formData, onSearchResult, onResetForm, dataType = "breeding
 
             setBreedingStockData((prev) =>
                 prev.map((item) =>
-                    item.индивидуальныйНомер === individualNumber ? filteredFormData : item
+                    item.индивидуальныйНомер === individualNumber ? updatedFormData : item
                 )
             );
             if (onResetForm) onResetForm();
             setValue("");
+            setIsEditing(false);
         } catch (error) {
             console.error(
                 "Ошибка при обновлении данных:",
                 error.response?.data || error.message
             );
-            console.log("Полный ответ сервера:", error.response);
+            console.log("Полный ответ сервера:", JSON.stringify(error.response?.data, null, 2));
             alert(error.response?.data?.detail || "Ошибка при обновлении данных");
         }
     };
@@ -410,11 +588,11 @@ function RightMenu({ formData, onSearchResult, onResetForm, dataType = "breeding
                     </div>
                     <span className="tooltip-text">Изменить</span>
                 </div>
-                <div className="tooltip-container" onClick={handleSave}>
+                <div className="tooltip-container" onClick={handleSave} style={{ opacity: isEditing ? 0.5 : 1, pointerEvents: isEditing ? "none" : "auto" }}>
                     <div className="icon">
                         <MdAddToPhotos />
                     </div>
-                    <span className="tooltip-text">Добавить</span>
+                    <span className="tooltip-text">{isEditing ? "Нельзя добавить, используйте 'Изменить'" : "Добавить"}</span>
                 </div>
             </div>
         </div>
