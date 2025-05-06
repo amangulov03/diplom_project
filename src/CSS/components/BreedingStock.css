@@ -1,0 +1,315 @@
+.breeding-stock-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+    display: grid;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.breeding-stock-container .text_title {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 15px 30px;
+    border-radius: 20px;
+}
+
+.breeding-stock-container .text_title h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2c3e50;
+    text-align: center;
+    background: linear-gradient(45deg, #3498db, #2e6dcc);
+    background-clip: text;
+    color: transparent;
+}
+
+.main-breeding-stock {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 60px 30px;
+    border-radius: 20px;
+}
+
+.breeding-stock-container h1 {
+    text-align: center;
+}
+
+form {
+    display: grid;
+    grid-template-columns: repeat(4, 320px);
+    gap: 30px;
+}
+
+.input-wrapper {
+    position: relative;
+    /* width: 250px; */
+}
+
+.modern-input {
+    width: 100%;
+    padding: 13px 10px;
+    border: none;
+    border: 1px solid #e2e2e2;
+    border-radius: 10px;
+    background: transparent;
+    font-size: 16px;
+    background: #e2e2e2;
+
+    transition: border-bottom 0.3s ease, transform 0.2s ease;
+    outline: none;
+}
+
+.modern-input:focus {
+    border: 1px solid #0056b3;
+    transform: translateY(-2px);
+}
+
+.floating-label {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #2c3e50;
+    pointer-events: none;
+    transition: all 0.2s ease;
+}
+
+.modern-input:focus ~ .floating-label,
+.modern-input:not(:placeholder-shown) ~ .floating-label {
+    top: -15px;
+    left: 10px;
+    font-size: 12px;
+    color: #0056b3;
+}
+
+.modern-input:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* src/components/AddFoto.css */
+.add-foto-container {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 15px 30px;
+    border-radius: 20px;
+}
+
+.foto-label {
+    cursor: pointer;
+    width: 250px;
+    height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.foto-placeholder {
+    color: #666;
+    text-align: center;
+    padding: 10px;
+}
+
+.foto-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.delete-button {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.delete-button:hover {
+    background-color: #c82333;
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+/* src/components/Genealogy.css */
+.genealogy-container {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    padding: 20px 20px;
+}
+
+.genealogies {
+    display: grid;
+    place-items: center;
+}
+
+.main-btn-genealogies {
+    display: grid;
+    gap: 50px;
+    position: relative;
+}
+
+.main-btn-genealogies .genealogies-1 {
+    display: flex;
+    justify-content: center;
+    gap: 600px;
+}
+
+.main-btn-genealogies .genealogies-2 {
+    display: flex;
+    justify-content: center;
+    gap: 200px;
+}
+
+.main-btn-genealogies .genealogies-3 {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.main-btn-genealogies button {
+    padding: 14px 20px;
+    font-size: 13px;
+    font-weight: 400;
+    color: #ffffff;
+    background: #3498db;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.main-btn-genealogies button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+    transition: 0.5s;
+}
+
+.main-btn-genealogies button:hover::before {
+    left: 100%;
+}
+
+.genealogy-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+}
+
+.genealogies h3 {
+    font-size: 2rem;
+    font-weight: 600;
+    text-align: center;
+    background: linear-gradient(45deg, #3498db, #2e6dcc);
+    background-clip: text;
+    color: transparent;
+    padding: 20px 0;
+}
+
+.genealogy-form h3 {
+    font-size: 2rem;
+    font-weight: 600;
+    text-align: center;
+    background: linear-gradient(45deg, #3498db, #2e6dcc);
+    background-clip: text;
+    color: transparent;
+    /* padding-top: 30px; */
+}
+
+.genealogy-form .main_input {
+    display: flex;
+    gap: 20px;
+}
+
+.genealogy-form .input-wrapper {
+    position: relative;
+}
+
+.genealogy-form .modern-input {
+    width: 100%;
+    padding: 10px 13px;
+    border: none;
+    border: 1px solid #e2e2e2;
+    border-radius: 10px;
+    background: transparent;
+    font-size: 16px;
+    background: #e2e2e2;
+    transition: border-bottom 0.3s ease, transform 0.2s ease;
+    outline: none;
+}
+
+.genealogy-form .modern-input:focus {
+    border: 1px solid #0056b3;
+    transform: translateY(-2px);
+}
+
+.genealogy-form .floating-label {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #2c3e50;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+.genealogy-form .modern-input:focus ~ .floating-label,
+.genealogy-form .modern-input:not(:placeholder-shown) ~ .floating-label {
+    top: -10px;
+    left: 10px;
+    font-size: 12px;
+    color: #0056b3;
+}
+
+.genealogy-form .modern-input:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* src/components/LinearSystem.css */
+.linear-system {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    padding: 60px 30px;
+}
+
+.linear-system h3 {
+    font-size: 2rem;
+    font-weight: 600;
+    text-align: center;
+    background: linear-gradient(45deg, #3498db, #2e6dcc);
+    background-clip: text;
+    color: transparent;
+    padding-bottom: 60px;
+}
