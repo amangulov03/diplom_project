@@ -55,6 +55,11 @@ function Menu() {
         navigate("/");
     };
 
+    const handleGoBack = () => {
+        navigate(-1); // Возвращает на предыдущую страницу
+    };
+
+
     if (!isAuthenticated) {
         return null;
     }
@@ -123,11 +128,14 @@ function Menu() {
                         <span className="tooltip-text">Быки <br/>(ностранные)</span>
                     </div>
 
-                    <Link className="a" to="/home" style={{ marginTop: "375px" }}>
-                        <IoMdArrowRoundBack />
-
-                    </Link>
+                    <div className="tooltip-container" style={{ marginTop: "375px" }}>
+                        <button className="a" onClick={handleGoBack}>
+                            <IoMdArrowRoundBack />
+                        </button>
+                        <span className="tooltip-text">Назад</span>
+                    </div>
                 </div>
+
                 <IoIosExit className="logout-button" onClick={handleLogout} />
             </div>
         </div>

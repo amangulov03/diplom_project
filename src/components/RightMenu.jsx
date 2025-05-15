@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import debounce from "lodash.debounce";
 import { MdOutlineDriveFileRenameOutline } from "react-icons/md";
+
 import { MdAddToPhotos } from "react-icons/md";
 import { FaSearch } from "react-icons/fa";
 
@@ -586,7 +587,7 @@ function RightMenu({ formData, onSearchResult, onResetForm, dataType = "breeding
                     <div className="icon">
                         <MdOutlineDriveFileRenameOutline />
                     </div>
-                    <span className="tooltip-text">Изменить</span>
+                    <span className="tooltip-text">Сохранить</span>
                 </div>
                 <div className="tooltip-container" onClick={handleSave} style={{ opacity: isEditing ? 0.5 : 1, pointerEvents: isEditing ? "none" : "auto" }}>
                     <div className="icon">

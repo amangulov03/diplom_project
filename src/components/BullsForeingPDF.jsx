@@ -131,11 +131,13 @@ const styles = StyleSheet.create({
     imageContainer: {
         textAlign: "center",
         marginBottom: 10,
+        display: "grid",
+        alignItems: "center",
     },
     image: {
-        width: 60,
-        height: 60,
-        borderRadius: 30,
+        width: 150,
+        height: 100,
+        borderRadius: 15,
         border: "1 solid #2e7d32",
         backgroundColor: "#fff",
         objectFit: "cover",
@@ -211,7 +213,6 @@ const BullsForeingPDF = ({ item }) => (
             <View style={styles.header}>
                 <Text style={styles.formInfo}>
                     ФОРМА: Приложение №1{"\n"}
-                    к приказу Минсельхоза России{"\n"}
                     от 06.06.2016 №232
                 </Text>
                 <View style={styles.logoContainer}>
@@ -306,12 +307,12 @@ const BullsForeingPDF = ({ item }) => (
 
             <View style={styles.signatureSection}>
                 <View style={styles.signature}>
-                    <Text style={styles.signatureLabel}>Ответственное лицо</Text>
+                    <Text style={styles.signatureLabel}></Text>
                     <View style={styles.signatureLine} />
                     <Text>Дата: {new Date().toLocaleDateString()}</Text>
                 </View>
                 <View style={styles.signature}>
-                    <Text style={styles.signatureLabel}>Ветеринарный инспектор</Text>
+                    <Text style={styles.signatureLabel}></Text>
                     <View style={styles.signatureLine} />
                     <Text>Дата: {new Date().toLocaleDateString()}</Text>
                 </View>

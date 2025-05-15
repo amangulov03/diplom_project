@@ -3,22 +3,26 @@ import React, { useState, useRef, useEffect } from 'react';
 const AddFoto = ({ onImageUpload, externalImage }) => {
     const [image, setImage] = useState(null);
     const [preview, setPreview] = useState(null);
+    const [filename, setFilename] = useState(null); // Новое состояние для хранения имени файла
     const [error, setError] = useState(null);
     const fileInputRef = useRef(null);
 
     useEffect(() => {
         if (externalImage) {
-            setPreview(externalImage);  // Устанавливаем изображение
-            setImage(null);  // Очищаем локальное состояние изображения
+            // Извлекаем filename из externalImage (например, /uploads/<filename>)
+            const extractedFilename = externalImage.split('/').pop().split('?')[0]; // Убираем параметры запроса, если есть
+            setPreview(externalImage);
+            setFilename(extractedFilename);
+            setImage(null);
         } else {
             setPreview(null);
+            setFilename(null);
             setImage(null);
             if (fileInputRef.current) {
                 fileInputRef.current.value = '';
             }
         }
     }, [externalImage]);
-
 
     const handleImageChange = async (e) => {
         const file = e.target.files[0];
@@ -31,6 +35,7 @@ const AddFoto = ({ onImageUpload, externalImage }) => {
             setError('Допустимы только JPEG и PNG');
             setImage(null);
             setPreview(null);
+            setFilename(null);
             return;
         }
 
@@ -38,6 +43,7 @@ const AddFoto = ({ onImageUpload, externalImage }) => {
             setError('Размер файла не должен превышать 5 МБ');
             setImage(null);
             setPreview(null);
+            setFilename(null);
             return;
         }
 
@@ -51,7 +57,7 @@ const AddFoto = ({ onImageUpload, externalImage }) => {
 
         try {
             console.log('Отправляем запрос на /api/upload-image');
-            const response = await fetch('http://localhost:8000/api/upload-image', { // Добавляем полный URL
+            const response = await fetch('http://localhost:8000/api/upload-image', {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('authToken')}`,
@@ -66,11 +72,12 @@ const AddFoto = ({ onImageUpload, externalImage }) => {
 
             const data = await response.json();
             const imageUrl = `${data.imageUrl}?t=${Date.now()}`;
+            const extractedFilename = data.imageUrl.split('/').pop(); // Извлекаем имя файла из URL
             setPreview(imageUrl);
+            setFilename(extractedFilename); // Сохраняем имя файла
             setImage(null);
             console.log('Успешная загрузка:', data);
 
-            // Передаём URL изображения родителю
             if (onImageUpload) {
                 onImageUpload(imageUrl);
             }
@@ -78,14 +85,23 @@ const AddFoto = ({ onImageUpload, externalImage }) => {
             setError(err.message || 'Не удалось загрузить изображение');
             setImage(null);
             setPreview(null);
+            setFilename(null);
             console.log('Ошибка загрузки:', err.message);
         }
     };
 
     const handleDelete = async () => {
+        if (!filename) {
+            setError('Имя файла не указано');
+            return;
+        }
+
+        const confirmDelete = window.confirm('Вы действительно хотите удалить изображение?');
+        if (!confirmDelete) return;
+
         try {
-            console.log('Отправляем запрос на /api/delete-image');
-            const response = await fetch('http://localhost:8000/api/delete-image', { // Добавляем полный URL
+            console.log(`Отправляем запрос на /api/delete-image/${filename}`);
+            const response = await fetch(`http://localhost:8000/api/delete-image/${filename}`, {
                 method: 'DELETE',
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('authToken')}`,
@@ -100,13 +116,13 @@ const AddFoto = ({ onImageUpload, externalImage }) => {
 
             setImage(null);
             setPreview(null);
+            setFilename(null);
             setError(null);
             if (fileInputRef.current) {
                 fileInputRef.current.value = '';
             }
             console.log('Фото удалено');
 
-            // Сбрасываем URL изображения в родителе
             if (onImageUpload) {
                 onImageUpload("");
             }
@@ -115,6 +131,7 @@ const AddFoto = ({ onImageUpload, externalImage }) => {
             console.log('Ошибка удаления:', err.message);
         }
     };
+
 
     return (
         <>

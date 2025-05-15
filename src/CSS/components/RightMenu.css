@@ -154,6 +154,11 @@
     display: inline-block;
 }
 
+.tooltip-container button {
+    border: #33333300 1px solid;
+    cursor: pointer;
+}
+
 .tooltip-text {
     text-align: center;
     visibility: hidden;
