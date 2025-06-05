@@ -141,6 +141,9 @@ nav img:hover {
 @media (max-width: 480px) {
     .home-container {
         padding: 10px;
+        width: 300px;
+        margin-left: 70px;
+
     }
 
     nav h2 {

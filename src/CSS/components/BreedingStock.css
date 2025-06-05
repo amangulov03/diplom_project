@@ -45,7 +45,6 @@ form {
 
 .input-wrapper {
     position: relative;
-    /* width: 250px; */
 }
 
 .modern-input {
@@ -57,7 +56,6 @@ form {
     background: transparent;
     font-size: 16px;
     background: #e2e2e2;
-
     transition: border-bottom 0.3s ease, transform 0.2s ease;
     outline: none;
 }
@@ -243,7 +241,6 @@ form {
     background: linear-gradient(45deg, #3498db, #2e6dcc);
     background-clip: text;
     color: transparent;
-    /* padding-top: 30px; */
 }
 
 .genealogy-form .main_input {
@@ -312,4 +309,195 @@ form {
     background-clip: text;
     color: transparent;
     padding-bottom: 60px;
+}
+
+/* Mobile version */
+@media (max-width: 768px) {
+    .breeding-stock-container {
+        max-width: 100%;
+        width: 90%;
+        margin: 0 auto;
+        padding: 0 10px;
+    }
+
+    .breeding-stock-container .text_title {
+        padding: 10px 15px;
+    }
+
+    .breeding-stock-container .text_title h1 {
+        font-size: 2rem;
+    }
+
+    .main-breeding-stock {
+        flex-direction: column;
+        padding: 30px 15px;
+        gap: 15px;
+    }
+
+    form {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .input-wrapper {
+        width: 100%;
+    }
+
+    .modern-input {
+        font-size: 14px;
+        padding: 10px 8px;
+    }
+
+    .add-foto-container {
+        padding: 10px 15px;
+    }
+
+    .foto-label {
+        width: 200px;
+        height: 200px;
+    }
+
+    .genealogy-container {
+        padding: 15px 10px;
+    }
+
+    .genealogies h3,
+    .genealogy-form h3 {
+        font-size: 1.5rem;
+        padding: 15px 0;
+    }
+
+    .main-btn-genealogies {
+        gap: 30px;
+    }
+
+    .main-btn-genealogies .genealogies-1 {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .main-btn-genealogies .genealogies-2 {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .main-btn-genealogies .genealogies-3 {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .main-btn-genealogies button {
+        font-size: 12px;
+        padding: 10px 15px;
+    }
+
+    .genealogy-form .main_input {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .linear-system {
+        padding: 30px 15px;
+    }
+
+    .linear-system h3 {
+        font-size: 1.5rem;
+        padding-bottom: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .breeding-stock-container {
+        width: 95%;
+        padding: 0 5px;
+    }
+
+    .breeding-stock-container .text_title {
+        padding: 8px 10px;
+    }
+
+    .breeding-stock-container .text_title h1 {
+        font-size: 1.8rem;
+    }
+
+    .main-breeding-stock {
+        padding: 20px 10px;
+        gap: 10px;
+    }
+
+    form {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .modern-input {
+        font-size: 13px;
+        padding: 8px 6px;
+    }
+
+    .floating-label {
+        font-size: 14px;
+        left: 10px;
+    }
+
+    .modern-input:focus ~ .floating-label,
+    .modern-input:not(:placeholder-shown) ~ .floating-label {
+        top: -12px;
+        left: 8px;
+        font-size: 10px;
+    }
+
+    .add-foto-container {
+        padding: 8px 10px;
+    }
+
+    .foto-label {
+        width: 150px;
+        height: 150px;
+    }
+
+    .foto-placeholder {
+        font-size: 14px;
+    }
+
+    .delete-button {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+
+    .error-message {
+        font-size: 12px;
+    }
+
+    .genealogy-container {
+        padding: 10px 5px;
+    }
+
+    .genealogies h3,
+    .genealogy-form h3 {
+        font-size: 1.3rem;
+        padding: 10px 0;
+    }
+
+    .main-btn-genealogies {
+        gap: 20px;
+    }
+
+    .main-btn-genealogies button {
+        font-size: 11px;
+        padding: 8px 10px;
+    }
+
+    .genealogy-form .main_input {
+        gap: 10px;
+    }
+
+    .linear-system {
+        padding: 20px 10px;
+    }
+
+    .linear-system h3 {
+        font-size: 1.3rem;
+        padding-bottom: 20px;
+    }
 }

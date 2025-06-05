@@ -32,7 +32,7 @@ const BreedingStockCard = () => {
                         try {
                             const response = await fetch(item.фото);
                             const blob = await response.blob();
-                            
+
                             return new Promise((resolve) => {
                                 const reader = new FileReader();
                                 reader.onloadend = () => {
@@ -175,7 +175,16 @@ const BreedingStockCard = () => {
                                 <strong>Группа крови:</strong> {item.группаКрови}
                             </p>
                             <p>
-                                <strong>Происхождение:</strong> {item.происхождение}
+                                <strong>Балл общий:</strong> {item.баллОбщий}
+                            </p>
+                            <p>
+                                <strong>Класс:</strong> {item.класс}
+                            </p>
+                            <p>
+                                <strong>Кому и куда продано:</strong> {item.кому_и_кудаПродано}
+                            </p>
+                            <p>
+                                <strong>Дата продажи:</strong> {item.датаПродажи}
                             </p>
                             <div className="card-buttons">
                                 <button

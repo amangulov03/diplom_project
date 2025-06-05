@@ -1,0 +1,65 @@
+from pydantic import BaseModel
+from typing import Optional
+
+class LinearAssessmentB(BaseModel):
+    датаОценки: Optional[str] = ""
+    номерКоровы: Optional[str] = ""
+    датаРождения: Optional[str] = ""
+    датаОтела: Optional[str] = ""
+    деньЛактации: Optional[str] = ""
+    номерОтца: Optional[str] = ""
+    рост: Optional[str] = ""
+    глубинаТуловища: Optional[str] = ""
+    ширинаГруди: Optional[str] = ""
+    молочныйТип: Optional[str] = ""
+    положениеТаза: Optional[str] = ""
+    ширинаТаза: Optional[str] = ""
+    постановкаЗаднихНогСбоку: Optional[str] = ""
+    уголКопыт: Optional[str] = ""
+    постановкаЗаднихНогСзади: Optional[str] = ""
+    качествоКостяка: Optional[str] = ""
+    прикреплениеПереднихДолей: Optional[str] = ""
+    глубинаВымени: Optional[str] = ""
+    высотаПрикрепленияЗаднихДолей: Optional[str] = ""
+    центральнаяСвязка: Optional[str] = ""
+    расположениеПереднихСосков: Optional[str] = ""
+    расположениеЗаднихСосков: Optional[str] = ""
+    длинаСосков: Optional[str] = ""
+    длинаКрестца: Optional[str] = ""
+    линияВерха: Optional[str] = ""
+    обмускуленность: Optional[str] = ""
+    упитанность: Optional[str] = ""
+    скакательныйСустав: Optional[str] = ""
+    легкостьДвижения: Optional[str] = ""
+    ширинаЗаднихДолей: Optional[str] = ""
+    балансВымени: Optional[str] = ""
+    выраженностьВен: Optional[str] = ""
+    длинаПереднихДолей: Optional[str] = ""
+    толщинаСосков: Optional[str] = ""
+
+class LinearAssessmentA(BaseModel):
+    молочныйТип: Optional[str] = ""
+    объемТуловища: Optional[str] = ""
+    конечности: Optional[str] = ""
+    вымя: Optional[str] = ""
+    итоговаяОценка: Optional[str] = ""
+    экстерьерПоБонитировке: Optional[str] = ""
+    мягкаяСпина: Optional[bool] = False
+    горбатаяСпина: Optional[bool] = False
+    слабаяПоясница: Optional[bool] = False
+    крыловидныеЛопатки: Optional[bool] = False
+    перехватЗаЛопатками: Optional[bool] = False
+    неровнаяЛинияВерха: Optional[bool] = False
+    высокаяПостановкаХвоста: Optional[bool] = False
+    запавшийКореньХвоста: Optional[bool] = False
+    крышевидныйКрестец: Optional[bool] = False
+    шилозадость: Optional[bool] = False
+    разметПереднихНог: Optional[bool] = False
+    мягкиеБабки: Optional[bool] = False
+    межкопытнаяЩель: Optional[bool] = False
+    наклонноеДноВымени: Optional[bool] = False
+    допСоски: Optional[bool] = False
+    неправильнаяФормаСосков: Optional[bool] = False
+    тонкиеСоски: Optional[bool] = False
+    перекрестныеЗадниеСоски: Optional[bool] = False
+    атрофияДолейВымени: Optional[bool] = False

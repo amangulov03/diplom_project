@@ -207,20 +207,18 @@
     font-size: 1.1rem;
     font-weight: 500;
     color: #2c3e50;
-    text-decoration: none; /* Убираем подчёркивание */
+    text-decoration: none;
     background: rgba(255, 255, 255, 0.9);
     border-radius: 8px;
     box-shadow: 0 1px 8px rgba(0, 0, 0, 0.05);
     opacity: 0;
     transform: translateX(-100%);
     transition: all 0.3s ease;
-
 }
 
 .hidden-menu.show .link-item {
     opacity: 1;
     transform: translateX(0);
-
 }
 
 .hidden-menu .link-item:nth-child(1) {
@@ -241,55 +239,186 @@
     transform: translateX(5px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
-
 }
 
-/* Responsive Design */
+/* Mobile version */
 @media (max-width: 768px) {
     .left-container {
+        margin: 10px;
         width: 60px;
-        padding: 10px 0;
+        height: 100vh;
+        padding: 15px 0;
+        border-radius: 10px;
     }
 
-    .left-container:hover {
-        width: 80px;
+    .icons-cows {
+        gap: 15px;
     }
 
-    .icons-cows a {
+    .icons-cows .a {
         width: 40px;
         height: 40px;
         font-size: 1.5rem;
+        border-radius: 10px;
+    }
+
+    .icons-cows .a:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
     }
 
     .logout-button {
-        padding: 8px 15px;
-        font-size: 0.8rem;
+        bottom: 15px;
+        width: 40px;
+        height: 40px;
+        padding: 8px;
+        border-radius: 10px;
     }
 
-    .hidden-menu .li {
-        font-size: 1rem;
+    .logout-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .burber-menu {
+        width: 40px;
+        height: 40px;
+        gap: 4px;
+        padding-left: 8px;
+        padding-right: 8px;
+        border-radius: 10px;
+    }
+
+    .burber-menu span {
+        height: 3px;
+    }
+
+    .burber-menu.open span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .burber-menu.open span:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -5px);
+    }
+
+    .hidden-menu {
+        margin: 10px;
+        left: 39px;
+        top: -10px;
+        height: 100vh;
+        border-radius: 0 10px 10px 0;
+    }
+
+    .hidden-menu.show {
+        width: 180px;
+        height: 100vh;
+    }
+
+    .hidden-menu ul {
+        padding: 8px;
+    }
+
+    .hidden-menu li {
+        margin: 8px 0;
+    }
+
+    .hidden-menu .link-item {
         padding: 10px 12px;
+        font-size: 1rem;
+        border-radius: 6px;
+    }
+
+    .hidden-menu .link-item:hover {
+        transform: translateX(3px);
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
     }
 }
 
 @media (max-width: 480px) {
     .left-container {
+        margin: 5px;
         width: 50px;
+        padding: 10px 0;
+        border-radius: 8px;
     }
 
-    .left-container:hover {
-        width: 70px;
+    .icons-cows {
+        gap: 10px;
     }
 
-    .icons-cows a {
+    .icons-cows .a {
         width: 35px;
         height: 35px;
         font-size: 1.3rem;
+        border-radius: 8px;
     }
 
-    .hidden-menu .li {
-        font-size: 0.9rem;
+    .icons-cows .a:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .logout-button {
+        bottom: 10px;
+        width: 35px;
+        height: 35px;
+        padding: 6px;
+        border-radius: 8px;
+    }
+
+    .logout-button:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .burber-menu {
+        width: 35px;
+        height: 35px;
+        gap: 3px;
+        padding-left: 6px;
+        padding-right: 6px;
+        border-radius: 8px;
+    }
+
+    .burber-menu span {
+        height: 2px;
+    }
+
+    .burber-menu.open span:nth-child(1) {
+        transform: rotate(45deg) translate(4px, 4px);
+    }
+
+    .burber-menu.open span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -4px);
+    }
+
+    .hidden-menu {
+        margin: 5px;
+        left: 34px;
+        top: -5px;
+        border-radius: 0 8px 8px 0;
+    }
+
+    .hidden-menu.show {
+        width: 150px;
+    }
+
+    .hidden-menu ul {
+        padding: 6px;
+    }
+
+    .hidden-menu li {
+        margin: 6px 0;
+    }
+
+    .hidden-menu .link-item {
         padding: 8px 10px;
+        font-size: 0.9rem;
+        border-radius: 5px;
+    }
+
+    .hidden-menu .link-item:hover {
+        transform: translateX(2px);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     }
 }
-

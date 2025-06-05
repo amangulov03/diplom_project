@@ -128,7 +128,7 @@ function Menu() {
                         <span className="tooltip-text">Быки <br/>(ностранные)</span>
                     </div>
 
-                    <div className="tooltip-container" style={{ marginTop: "375px" }}>
+                    <div className="tooltip-container_back">
                         <button className="a" onClick={handleGoBack}>
                             <IoMdArrowRoundBack />
                         </button>

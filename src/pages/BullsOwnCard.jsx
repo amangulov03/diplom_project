@@ -36,12 +36,18 @@ const BullsOwnCard = () => {
                             return new Promise((resolve) => {
                                 const reader = new FileReader();
                                 reader.onloadend = () => {
-                                    resolve({ id: item.индивидуальныйНомер, base64: reader.result });
+                                    resolve({
+                                        id: item.индивидуальныйНомер,
+                                        base64: reader.result,
+                                    });
                                 };
                                 reader.readAsDataURL(blob);
                             });
                         } catch (error) {
-                            console.error(`Ошибка загрузки изображения для ${item.индивидуальныйНомер}:`, error);
+                            console.error(
+                                `Ошибка загрузки изображения для ${item.индивидуальныйНомер}:`,
+                                error
+                            );
                             return { id: item.индивидуальныйНомер, base64: null };
                         }
                     }
@@ -118,76 +124,90 @@ const BullsOwnCard = () => {
                 <div className="cards-list">
                     {bullsOwnData.map((item, index) => (
                         <div key={index} className="card" id={`card-${index}`}>
-                        <h2>Карточка #{index + 1}</h2>
-                        {item.фото && (
-                            <div className="card-image">
-                                <img
-                                    src={item.фото}
-                                    alt="Фото быка"
-                                    className="cow-photo"
-                                />
+                            <h2>Карточка #{index + 1}</h2>
+                            {item.фото ? (
+                                <div className="card-image">
+                                    <img
+                                        src={item.фото}
+                                        alt="Фото быка"
+                                        className="cow-photo"
+                                    />
+                                </div>
+                            ) : (
+                                <div className="card-image">
+                                    <span className="no-photo-text">Нет фото</span>
+                                </div>
+                            )}
+                            <p>
+                                <strong>Индивидуальный номер:</strong>{" "}
+                                {item.индивидуальныйНомер}
+                            </p>
+                            <p>
+                                <strong>Инвентарный номер:</strong>{" "}
+                                {item.инвентарныйНомер}
+                            </p>
+                            <p>
+                                <strong>Идентификационный номер:</strong>{" "}
+                                {item.идентификационныйНомер}
+                            </p>
+                            <p>
+                                <strong>Кличка:</strong> {item.кличка}
+                            </p>
+                            <p>
+                                <strong>Дата рождения:</strong> {item.датаРождения}
+                            </p>
+                            <p>
+                                <strong>Место рождения:</strong> {item.местоРождения}
+                            </p>
+                            <p>
+                                <strong>Порода:</strong> {item.порода}
+                            </p>
+                            <p>
+                                <strong>Линия:</strong> {item.линия}
+                            </p>
+                            <p>
+                                <strong>Породность:</strong> {item.породность}
+                            </p>
+                            <p>
+                                <strong>Семейство:</strong> {item.семейство}
+                            </p>
+                            <p>
+                                <strong>Кому принадлежит:</strong> {item.комуПринадлежит}
+                            </p>
+                            <p>
+                                <strong>Масть и приметы:</strong> {item.мастьИПриметы}
+                            </p>
+                            <p>
+                                <strong>Группа крови:</strong> {item.группаКрови}
+                            </p>
+                            <p>
+                                <strong>Балл общий:</strong> {item.баллОбщий}
+                            </p>
+                            <p>
+                                <strong>Класс:</strong> {item.класс}
+                            </p>
+                            <p>
+                                <strong>Кому и куда продано:</strong>{" "}
+                                {item.кому_и_кудаПродано}
+                            </p>
+                            <p>
+                                <strong>Дата продажи:</strong> {item.датаПродажи}
+                            </p>
+                            <div className="card-buttons">
+                                <button
+                                    onClick={() => handleDelete(item.индивидуальныйНомер)}
+                                    className="delete_button"
+                                >
+                                    Удалить
+                                </button>
+                                <button
+                                    className="download_button"
+                                    onClick={() => handleDownloadSinglePDF(item)}
+                                >
+                                    Скачать PDF
+                                </button>
                             </div>
-                        )}
-                        <p>
-                            <strong>Индивидуальный номер:</strong>{" "}
-                            {item.индивидуальныйНомер}
-                        </p>
-                        <p>
-                            <strong>Инвентарный номер:</strong>{" "}
-                            {item.инвентарныйНомер}
-                        </p>
-                        <p>
-                            <strong>Идентификационный номер:</strong>{" "}
-                            {item.идентификационныйНомер}
-                        </p>
-                        <p>
-                            <strong>Кличка:</strong> {item.кличка}
-                        </p>
-                        <p>
-                            <strong>Дата рождения:</strong> {item.датаРождения}
-                        </p>
-                        <p>
-                            <strong>Место рождения:</strong> {item.местоРождения}
-                        </p>
-                        <p>
-                            <strong>Порода:</strong> {item.порода}
-                        </p>
-                        <p>
-                            <strong>Линия:</strong> {item.линия}
-                        </p>
-                        <p>
-                            <strong>Породность:</strong> {item.породность}
-                        </p>
-                        <p>
-                            <strong>Семейство:</strong> {item.семейство}
-                        </p>
-                        <p>
-                            <strong>Кому принадлежит:</strong> {item.комуПринадлежит}
-                        </p>
-                        <p>
-                            <strong>Масть и приметы:</strong> {item.мастьИПриметы}
-                        </p>
-                        <p>
-                            <strong>Группа крови:</strong> {item.группаКрови}
-                        </p>
-                        <p>
-                            <strong>Происхождение:</strong> {item.происхождение}
-                        </p>
-                        <div className="card-buttons">
-                            <button
-                                onClick={() => handleDelete(item.индивидуальныйНомер)}
-                                className="delete_button"
-                            >
-                                Удалить
-                            </button>
-                            <button
-                                className="download_button"
-                                onClick={() => handleDownloadSinglePDF(item)}
-                            >
-                                Скачать PDF
-                            </button>
                         </div>
-                    </div>
                     ))}
                 </div>
             )}
