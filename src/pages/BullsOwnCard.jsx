@@ -18,7 +18,7 @@ const BullsOwnCard = () => {
                 }
 
                 const response = await axios.get(
-                    "http://localhost:8000/api/get-bulls-own",
+                    "http://localhost:3000/api/get-bulls-own",
                     {
                         headers: {
                             Authorization: `Bearer ${token}`,
@@ -78,7 +78,7 @@ const BullsOwnCard = () => {
             }
 
             await axios.delete(
-                `http://localhost:8000/api/delete-bulls-own/${individualNumber}`,
+                `http://localhost:3000/api/delete-bulls-own/${individualNumber}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,

@@ -334,9 +334,20 @@ form {
         gap: 15px;
     }
 
+    .linear-system {
+        flex-direction: column;
+        padding: 30px 15px;
+        gap: 15px;
+    }
+
     form {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(1, 1fr);
         gap: 20px;
+    }
+
+    .linear-system form {
+        width: 200px;
+        margin: 0 auto;
     }
 
     .input-wrapper {
@@ -408,7 +419,6 @@ form {
 
 @media (max-width: 480px) {
     .breeding-stock-container {
-        width: 95%;
         padding: 0 5px;
     }
 
@@ -425,18 +435,25 @@ form {
         gap: 10px;
     }
 
+    .linear-system form {
+        width: 200px;
+        margin: 0 auto;
+    }
+
     form {
         grid-template-columns: 1fr;
-        gap: 15px;
+        gap: 20px;
     }
 
     .modern-input {
+        margin: 0 auto;
+        width: 150px;
         font-size: 13px;
-        padding: 8px 6px;
+        padding: 5px 4px;
     }
 
     .floating-label {
-        font-size: 14px;
+        font-size: 10px;
         left: 10px;
     }
 
@@ -448,7 +465,7 @@ form {
     }
 
     .add-foto-container {
-        padding: 8px 10px;
+        padding: 5px 7px;
     }
 
     .foto-label {
@@ -473,6 +490,18 @@ form {
         padding: 10px 5px;
     }
 
+    .genealogy-form .modern-input {
+        margin: 0 auto;
+        width: 150px;
+        font-size: 13px;
+        padding: 5px 4px;
+    }
+
+    .genealogy-form .floating-label {
+        font-size: 10px;
+        left: 10px;
+    }
+
     .genealogies h3,
     .genealogy-form h3 {
         font-size: 1.3rem;
@@ -494,10 +523,13 @@ form {
 
     .linear-system {
         padding: 20px 10px;
+        padding-left: 50px;
     }
 
     .linear-system h3 {
         font-size: 1.3rem;
         padding-bottom: 20px;
+        text-align: center;
+        right: 40px;
     }
 }

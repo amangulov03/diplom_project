@@ -57,7 +57,7 @@ const AddFoto = ({ onImageUpload, externalImage }) => {
 
         try {
             console.log('Отправляем запрос на /api/upload-image');
-            const response = await fetch('http://localhost:8000/api/upload-image', {
+            const response = await fetch('http://localhost:3000/api/upload-image', {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('authToken')}`,
@@ -101,7 +101,7 @@ const AddFoto = ({ onImageUpload, externalImage }) => {
 
         try {
             console.log(`Отправляем запрос на /api/delete-image/${filename}`);
-            const response = await fetch(`http://localhost:8000/api/delete-image/${filename}`, {
+            const response = await fetch(`http://localhost:3000/api/delete-image/${filename}`, {
                 method: 'DELETE',
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('authToken')}`,

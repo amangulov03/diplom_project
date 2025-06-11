@@ -18,7 +18,7 @@ function BullsForeingCard() {
                 }
 
                 const response = await axios.get(
-                    "http://localhost:8000/api/get-bulls-foreing",
+                    "http://localhost:3000/api/get-bulls-foreing",
                     {
                         headers: {
                             Authorization: `Bearer ${token}`,
@@ -78,7 +78,7 @@ function BullsForeingCard() {
             }
 
             await axios.delete(
-                `http://localhost:8000/api/delete-bulls-foreing/${individualNumber}`,
+                `http://localhost:3000/api/delete-bulls-foreing/${individualNumber}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -125,13 +125,17 @@ function BullsForeingCard() {
                     {bullsOwnData.map((item, index) => (
                         <div key={index} className="card" id={`card-${index}`}>
                             <h2>Карточка #{index + 1}</h2>
-                            {item.фото && (
+                            {item.фото ? (
                                 <div className="card-image">
                                     <img
                                         src={item.фото}
                                         alt="Фото быка"
                                         className="cow-photo"
                                     />
+                                </div>
+                            ) : (
+                                <div className="card-image">
+                                    <span className="no-photo-text">Нет фото</span>
                                 </div>
                             )}
                             <p>

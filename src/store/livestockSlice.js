@@ -14,16 +14,16 @@ export const fetchLivestock = createAsyncThunk(
       let apiEndpoint = '';
       switch (dataType) {
         case 'breedingStock':
-          apiEndpoint = 'http://localhost:8000/api/get-breeding-stock';
+          apiEndpoint = 'http://localhost:3000/api/get-breeding-stock';
           break;
         case 'bullsOwn':
-          apiEndpoint = 'http://localhost:8000/api/get-bulls-own';
+          apiEndpoint = 'http://localhost:3000/api/get-bulls-own';
           break;
         case 'bullsForeing':
-          apiEndpoint = 'http://localhost:8000/api/get-bulls-foreing';
+          apiEndpoint = 'http://localhost:3000/api/get-bulls-foreing';
           break;
         default:
-          apiEndpoint = 'http://localhost:8000/api/get-breeding-stock';
+          apiEndpoint = 'http://localhost:3000/api/get-breeding-stock';
       }
 
       const response = await axios.get(apiEndpoint, {
@@ -62,16 +62,16 @@ export const saveLivestock = createAsyncThunk(
       let apiEndpoint = '';
       switch (dataType) {
         case 'breedingStock':
-          apiEndpoint = 'http://localhost:8000/api/save-breeding-stock';
+          apiEndpoint = 'http://localhost:3000/api/save-breeding-stock';
           break;
         case 'bullsOwn':
-          apiEndpoint = 'http://localhost:8000/api/save-bulls-own';
+          apiEndpoint = 'http://localhost:3000/api/save-bulls-own';
           break;
         case 'bullsForeing':
-          apiEndpoint = 'http://localhost:8000/api/save-bulls-foreing';
+          apiEndpoint = 'http://localhost:3000/api/save-bulls-foreing';
           break;
         default:
-          apiEndpoint = 'http://localhost:8000/api/save-breeding-stock';
+          apiEndpoint = 'http://localhost:3000/api/save-breeding-stock';
       }
 
       const response = await axios.post(apiEndpoint, formData, {
@@ -103,16 +103,16 @@ export const updateLivestock = createAsyncThunk(
       let apiEndpoint = '';
       switch (dataType) {
         case 'breedingStock':
-          apiEndpoint = 'http://localhost:8000/api/update-breeding-stock';
+          apiEndpoint = 'http://localhost:3000/api/update-breeding-stock';
           break;
         case 'bullsOwn':
-          apiEndpoint = 'http://localhost:8000/api/update-bulls-own';
+          apiEndpoint = 'http://localhost:3000/api/update-bulls-own';
           break;
         case 'bullsForeing':
-          apiEndpoint = 'http://localhost:8000/api/update-bulls-foreing';
+          apiEndpoint = 'http://localhost:3000/api/update-bulls-foreing';
           break;
         default:
-          apiEndpoint = 'http://localhost:8000/api/update-breeding-stock';
+          apiEndpoint = 'http://localhost:3000/api/update-breeding-stock';
       }
 
       const response = await axios.put(apiEndpoint, formData, {

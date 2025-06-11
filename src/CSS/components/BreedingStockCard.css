@@ -137,7 +137,6 @@
     .card-container {
         padding: 15px;
         max-width: 100%;
-        width: 90%;
         margin-left: 70px;
     }
 
@@ -145,6 +144,7 @@
         padding: 10px 20px;
         margin-bottom: 20px;
         width: 550px;
+        margin: 0 auto;
     }
 
     .card-container h1 {
@@ -154,6 +154,7 @@
     .cards-list {
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
         gap: 15px;
+        margin: 0 auto;
     }
 
     .card {
@@ -196,13 +197,13 @@
 @media (max-width: 480px) {
     .card-container {
         padding: 10px;
-        width: 95%;
     }
 
     .card-container .text_title {
         padding: 8px 15px;
         margin-bottom: 15px;
         width: 300px;
+        margin: 0 auto;
     }
 
     .card-container h1 {
@@ -213,6 +214,8 @@
         grid-template-columns: 1fr;
         gap: 10px;
         width: 300px;
+        margin: 0 auto;
+        margin-top: 20px;
     }
 
     .card {

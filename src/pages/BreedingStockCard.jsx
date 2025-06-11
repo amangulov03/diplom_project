@@ -18,7 +18,7 @@ const BreedingStockCard = () => {
                 }
 
                 const response = await axios.get(
-                    "http://localhost:8000/api/get-breeding-stock",
+                    "http://localhost:3000/api/get-breeding-stock",
                     {
                         headers: {
                             Authorization: `Bearer ${token}`,
@@ -72,7 +72,7 @@ const BreedingStockCard = () => {
             }
 
             await axios.delete(
-                `http://localhost:8000/api/delete-breeding-stock/${individualNumber}`,
+                `http://localhost:3000/api/delete-breeding-stock/${individualNumber}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -119,13 +119,17 @@ const BreedingStockCard = () => {
                     {breedingStockData.map((item, index) => (
                         <div key={index} className="card" id={`card-${index}`}>
                             <h2>Карточка #{index + 1}</h2>
-                            {item.фото && (
+                            {item.фото ? (
                                 <div className="card-image">
                                     <img
                                         src={item.фото}
-                                        alt="Фото коровы"
+                                        alt="Фото быка"
                                         className="cow-photo"
                                     />
+                                </div>
+                            ) : (
+                                <div className="card-image">
+                                    <span className="no-photo-text">Нет фото</span>
                                 </div>
                             )}
                             <p>
