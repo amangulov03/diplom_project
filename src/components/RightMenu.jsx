@@ -99,7 +99,7 @@ function RightMenu({ formData, onSearchResult, onResetForm, dataType = 'breeding
       )
     ) {
       alert(
-        'Запись с таким индивидуальным номером уже существует! Используйте кнопку "Изменить".'
+        'Запись с таким индивидуальным номером уже существует!'
       );
       return;
     }
