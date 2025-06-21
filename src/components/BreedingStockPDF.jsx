@@ -196,11 +196,11 @@ const styles = StyleSheet.create({
     },
     tableCellValue: {
         padding: 3,
-        fontSize: 9,
+        fontSize: 8,
         color: "#333",
         textAlign: "center",
         borderRight: "1 solid #2e7d32",
-        width: "50%", // Для колонок "Индивидуальный номер", "Кличка", "Дата рождения"
+        width: "52%", // Для колонок "Индивидуальный номер", "Кличка", "Дата рождения"
     },
     noData: {
         fontSize: 9,

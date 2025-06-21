@@ -205,7 +205,7 @@ const BreedingStock = () => {
         { name: "комуПринадлежит", label: "Кому принадлежит", type: "text" },
         { name: "назначениеКоровы", label: "Назначение коровы", type: "text" },
         { name: "мастьИПриметы", label: "Масть и приметы", type: "text" },
-        { name: "группаКрови", label: "Группа крови", type: "number" },
+        { name: "группаКрови", label: "Группа крови", type: "text" },
         { name: "баллОбщий", label: "Балл общий", type: "number" },
         { name: "класс", label: "Класс", type: "text" },
         { name: "кому_и_кудаПродано", label: "Кому и куда продано", type: "text" },
