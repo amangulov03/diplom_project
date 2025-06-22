@@ -584,12 +584,6 @@ const BuiilOwnPDF = ({ item }) => {
                             </Text>
                         </View>
                         <View style={styles.field}>
-                            <Text style={styles.label}>Семейство:</Text>
-                            <Text style={styles.value}>
-                                {item.семейство || "Не указано"}
-                            </Text>
-                        </View>
-                        <View style={styles.field}>
                             <Text style={styles.label}>Владелец:</Text>
                             <Text style={styles.value}>
                                 {item.комуПринадлежит || "Не указано"}

@@ -169,9 +169,6 @@ const BullsOwnCard = () => {
                                 <strong>Породность:</strong> {item.породность}
                             </p>
                             <p>
-                                <strong>Семейство:</strong> {item.семейство}
-                            </p>
-                            <p>
                                 <strong>Кому принадлежит:</strong> {item.комуПринадлежит}
                             </p>
                             <p>
